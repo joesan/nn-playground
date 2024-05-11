@@ -3,10 +3,11 @@ from fastai.vision.utils import *
 from fastcore.all import *
 from time import sleep
 
-searches = 'forest','bird'
+searches = 'forest', 'bird'
 path = Path('../data/raw/bird_or_not')
 
-def search_images(term, max_images=30):
+
+def search_images(term, max_images=200):
     print(f"Searching for '{term}'")
     with DDGS() as ddgs:
         search_results = ddgs.images(keywords=term)
@@ -15,9 +16,9 @@ def search_images(term, max_images=30):
         return L(image_urls)
 
 
-def fetch_images(searchTerms = searches):
+def fetch_images(searchTerms=searches):
     for o in searchTerms:
-        dest = (path/o)
+        dest = (path / o)
         dest.mkdir(exist_ok=True, parents=True)
         download_images(dest, urls=search_images(f'{o} photo'))
         sleep(10)  # Pause between searches to avoid over-loading server
@@ -25,4 +26,4 @@ def fetch_images(searchTerms = searches):
         sleep(10)
         download_images(dest, urls=search_images(f'{o} shade photo'))
         sleep(10)
-        resize_images(path/o, max_size=400, dest=path/o)
+        resize_images(path / o, max_size=400, dest=path / o)
