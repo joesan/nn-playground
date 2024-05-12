@@ -63,5 +63,13 @@ def train_model_from_data():
     return learner
 
 
-def dump_model():
-    joblib.dump(train_model_from_data, 'is_it_a_bird_model.pkl')
+def dump_model(learner):
+    joblib.dump(learner, 'is_it_a_bird_model.pkl')
+
+
+# Download Images, Train model and Dump model file
+def download_train_dump_model():
+    fetch_images()
+    unlink_failed_images()
+    learner = train_model_from_data()
+    dump_model(learner)
