@@ -8,13 +8,23 @@ from fastai.vision.learner import vision_learner
 from fastai.vision.utils import *
 from fastcore.all import *
 from time import sleep
-
+from dotenv import load_dotenv
 from torchvision.models import resnet18
 
 import joblib
+import os
 
-searches = 'forest', 'bird'
-path = Path('../data/raw/bird_or_not')
+
+searches='forest', 'bird'
+path=Path('../data/raw/bird_or_not')
+model_path=''
+
+# Load environment variables from the .env file
+load_dotenv()
+
+
+# Access the environment variables
+project_root = os.environ.get('PROJECT_ROOT')
 
 
 def search_images(term, max_images=200):
