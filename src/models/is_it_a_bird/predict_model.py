@@ -1,7 +1,8 @@
-from flask import Flask, request, jsonify
 from fastai.learner import load_learner
 from fastai.vision.core import PILImage
-import joblib
+from flask import Flask, request, jsonify
+from src.models.is_it_a_bird import env
+
 
 app = Flask(__name__)
 
@@ -11,7 +12,7 @@ learn = None
 
 def load_model():
     global learn
-    learn = load_learner('is_it_a_bird_model.pkl')
+    learn = load_learner(env.model_path)
 
 
 # API endpoint for prediction

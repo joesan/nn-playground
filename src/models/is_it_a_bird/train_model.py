@@ -14,17 +14,7 @@ from torchvision.models import resnet18
 import joblib
 import os
 
-
-searches='forest', 'bird'
-path=Path('../data/raw/bird_or_not')
-model_path=''
-
-# Load environment variables from the .env file
-load_dotenv()
-
-
-# Access the environment variables
-project_root = os.environ.get('PROJECT_ROOT')
+from src.models.is_it_a_bird import env
 
 
 def search_images(term, max_images=200):
@@ -36,9 +26,9 @@ def search_images(term, max_images=200):
         return L(image_urls)
 
 
-def fetch_images(searchTerms=searches):
+def fetch_images(searchTerms=env.searches):
     for o in searchTerms:
-        dest = (path / o)
+        dest = (env.data_dir / o)
         dest.mkdir(exist_ok=True, parents=True)
         download_images(dest, urls=search_images(f'{o} photo'))
         sleep(10)  # Pause between searches to avoid over-loading server
@@ -46,11 +36,11 @@ def fetch_images(searchTerms=searches):
         sleep(10)
         download_images(dest, urls=search_images(f'{o} shade photo'))
         sleep(10)
-        resize_images(path / o, max_size=400, dest=path / o)
+        resize_images(env.data_dir / o, max_size=400, dest=env.data_dir / o)
 
 
 def unlink_failed_images():
-    failed = verify_images(get_image_files(path))
+    failed = verify_images(get_image_files(env.data_dir))
     failed.map(Path.unlink)
     len(failed)
 
@@ -62,7 +52,7 @@ def data_block():
         splitter=RandomSplitter(valid_pct=0.2, seed=42),
         get_y=parent_label,
         item_tfms=[Resize(192, method='squish')]
-    ).dataloaders(path)
+    ).dataloaders(env.data_dir)
 
 
 dls = data_block()
@@ -74,7 +64,7 @@ def train_model_from_data():
 
 
 def dump_model(learner):
-    joblib.dump(learner, 'is_it_a_bird_model.pkl')
+    joblib.dump(learner, env.model_path)
 
 
 # Download Images, Train model and Dump model file
