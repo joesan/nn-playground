@@ -11,6 +11,8 @@ from time import sleep
 
 from torchvision.models import resnet18
 
+import joblib
+
 searches = 'forest', 'bird'
 path = Path('../data/raw/bird_or_not')
 
@@ -59,3 +61,7 @@ def train_model_from_data():
     learner = vision_learner(dls, resnet18, metrics=error_rate)
     learner.fine_tune(3)
     return learner
+
+
+def dump_model():
+    joblib.dump(train_model_from_data, 'is_it_a_bird_model.pkl')
