@@ -3,6 +3,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+
 # Define the terms that we want to use for search
 searches = 'forest', 'bird'
 # Define the filename for the resulting model

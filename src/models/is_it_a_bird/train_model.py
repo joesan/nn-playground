@@ -1,7 +1,7 @@
 from duckduckgo_search import DDGS
 from fastai.data.block import DataBlock, CategoryBlock
 from fastai.data.transforms import get_image_files, RandomSplitter, parent_label
-from fastai.metrics import error_rate
+from fastai.metrics import error_rate, accuracy
 from fastai.vision.augment import Resize
 from fastai.vision.data import ImageBlock
 from fastai.vision.learner import vision_learner
@@ -9,7 +9,7 @@ from fastai.vision.utils import *
 from fastcore.all import *
 from time import sleep
 from dotenv import load_dotenv
-from torchvision.models import resnet18
+from torchvision.models import resnet34
 
 import joblib
 import os
@@ -58,9 +58,9 @@ def data_block():
 dls = data_block()
 
 def train_model_from_data():
-    learner = vision_learner(dls, resnet18, metrics=error_rate)
-    learner.fine_tune(3)
-    return learner
+    learn = vision_learner(dls, resnet34, metrics=[partial(accuracy, axis=1)])
+    learn.fine_tune(6)
+    return learn
 
 
 def dump_model(learner):
@@ -69,7 +69,7 @@ def dump_model(learner):
 
 # Download Images, Train model and Dump model file
 def download_train_dump_model():
-    fetch_images()
-    unlink_failed_images()
+    #fetch_images()
+    #unlink_failed_images()
     learner = train_model_from_data()
     dump_model(learner)

@@ -15,4 +15,4 @@ scikit_learn
 azure-cognitiveservices-search-imagesearch
 sentencepiece
 duckduckgo_search
-dotenv
+python-dotenv
