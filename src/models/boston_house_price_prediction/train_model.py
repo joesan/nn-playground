@@ -12,10 +12,10 @@ import requests
 
 # https://lib.stat.cmu.edu/datasets/boston
 def load_data(data_dir):
-    print(data_dir)
     # Check if the dataset file exists in the data directory
-    dataset_file = Path(os.path.join(data_dir, env.boston_dataset))
-    print(dataset_file)
+    dataset_file = Path(data_dir / env.boston_dataset).resolve()
+    print("Dataset file:", dataset_file)
+
     if os.path.exists(dataset_file):
         # If the dataset file exists, load it directly
         raw_df = pd.read_csv(dataset_file, sep="\s+", skiprows=22, header=None)

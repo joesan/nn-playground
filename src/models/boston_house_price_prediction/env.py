@@ -18,10 +18,12 @@ environ = load_dotenv(env_file)
 # Access the environment variables
 project_root = os.environ.get('PROJECT_ROOT_FOLDER')
 if not project_root:
-    raise ValueError("PROJECT_ROOT environment variable is not set.")
+    raise ValueError("PROJECT_ROOT_FOLDER environment variable is not set.")
+
 absolute_path = os.path.abspath(project_root)
-data_dir = Path(os.path.join(absolute_path, 'data/raw/boston_housing_price/'))
-models_dir = Path(os.path.join(absolute_path, 'models/boston_housing_price/'))
+data_dir = Path(absolute_path) / 'data' / 'raw' / 'boston_housing_price'
+data_dir = data_dir.resolve()  # Resolve to get the absolute path
+models_dir = Path(absolute_path) / 'models' / 'boston_housing_price'
 print('***************** LOAD ENVIRONMENT ********************+')
 print("Project Root DIR", project_root)
 print("Project Root DIR", absolute_path)
