@@ -8,7 +8,6 @@ from fastai.vision.learner import vision_learner
 from fastai.vision.utils import *
 from fastcore.all import *
 from time import sleep
-from dotenv import load_dotenv
 from torchvision.models import resnet34
 
 import joblib

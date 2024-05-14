@@ -11,6 +11,7 @@ ipywidgets
 matplotlib
 nbdev>=0.2.12
 pandas
+numpy
 scikit_learn
 azure-cognitiveservices-search-imagesearch
 sentencepiece
