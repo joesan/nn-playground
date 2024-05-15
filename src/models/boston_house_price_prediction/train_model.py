@@ -2,34 +2,32 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import zipfile
 from pandas import DataFrame
 from io import StringIO
 
 from src.models.boston_house_price_prediction import env
 import os
 import requests
+from urllib.request import urlretrieve
 
 
-# https://lib.stat.cmu.edu/datasets/boston
-def load_data(data_dir):
+def load_data(data_dir=env.data_dir):
     # Check if the dataset file exists in the data directory
     dataset_file = Path(data_dir / env.boston_dataset).resolve()
     print("Dataset file:", dataset_file)
 
+    # We get the column names after inspecting the boston housing dataset visually
+    column_names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT',
+                    'MEDV']
+
     if os.path.exists(dataset_file):
         # If the dataset file exists, load it directly
-        raw_df = pd.read_csv(dataset_file, sep="\s+", skiprows=22, header=None)
+        print("Dataset file exists.")
+        raw_df = pd.read_csv(dataset_file, header=None, delimiter=r"\s+", names=column_names)
     else:
-        # If the dataset file doesn't exist, fetch it from the URL
-        response = requests.get(env.boston_dataset_url)
-        if response.status_code == 200:
-            # Parse the CSV data from the response content
-            csv_data = response.text
-            raw_df = pd.read_csv(StringIO(csv_data), sep="\s+", skiprows=22, header=None)
-            # Save the dataset to the data directory for future use
-            raw_df.to_csv(dataset_file, index=False)
-        else:
-            print("Failed to fetch data from URL:", env.boston_dataset_url)
-            return None
+        print("Downloading Dataset......")
+        urlretrieve(env.boston_dataset_url, Path(data_dir) / 'boston_housing.csv')
+        raw_df = pd.read_csv(dataset_file, header=None, delimiter=r"\s+", names=column_names)
     return raw_df
 

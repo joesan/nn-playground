@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 
 # Define the filename for the resulting model
 model_filename = 'boston_housing_price_predictor.pkl'
-boston_dataset_url = "http://lib.stat.cmu.edu/datasets/boston"
-boston_dataset = "boston_dataset.csv"
+#boston_dataset_url = "http://lib.stat.cmu.edu/datasets/boston"
+boston_dataset_url = 'https://raw.githubusercontent.com/noahgift/boston_housing_pickle/master/housing.csv'
+boston_dataset = 'boston_housing.csv'
 
 
 # Load environment variables from the .env file
@@ -25,7 +26,6 @@ data_dir = Path(absolute_path) / 'data' / 'raw' / 'boston_housing_price'
 data_dir = data_dir.resolve()  # Resolve to get the absolute path
 models_dir = Path(absolute_path) / 'models' / 'boston_housing_price'
 print('***************** LOAD ENVIRONMENT ********************+')
-print("Project Root DIR", project_root)
 print("Project Root DIR", absolute_path)
 print("Project Data DIR", data_dir)
 print("Models Dump DIR", models_dir)
