@@ -24,7 +24,7 @@ def load_data(data_dir=env.data_dir):
     if os.path.exists(dataset_file):
         # If the dataset file exists, load it directly
         print("Dataset file exists.")
-        raw_df = pd.read_csv(dataset_file, header=None, delimiter=r"\s+", names=column_names)
+        raw_df = pd.read_csv(dataset_file, header=None, delimiter=r"\s+", names=column_names, na_values='?')
     else:
         print("Downloading Dataset......")
         urlretrieve(env.boston_dataset_url, Path(data_dir) / 'boston_housing.csv')
