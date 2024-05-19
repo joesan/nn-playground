@@ -17,3 +17,5 @@ azure-cognitiveservices-search-imagesearch
 sentencepiece
 duckduckgo_search
 python-dotenv
+colorama
+
