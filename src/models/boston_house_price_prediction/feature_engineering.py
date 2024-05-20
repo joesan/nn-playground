@@ -39,7 +39,7 @@ def evaluate_imputation_strategies(X, y):
         ])
         # Evaluate the model
         cv = RepeatedKFold(n_splits=10, n_repeats=3, random_state=1)
-        scores = cross_val_score(pipeline, X, y, scoring='neg_mean_squared_error', cv=cv, n_jobs=-1)
+        scores = cross_val_score(pipeline, X, y, scoring='neg_root_mean_squared_error', cv=cv, n_jobs=-1)
         # Convert scores to positive
         scores = -scores
         # Store results
