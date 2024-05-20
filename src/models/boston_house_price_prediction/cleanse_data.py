@@ -38,17 +38,21 @@ def delete_duplicate_rows(df):
         red("************+ delete_duplicate_rows ************+ ")
         return df
 
-def delete_missing_values(df):
+def delete_missing_values(df, threshold_in_percentage=70):
     red("************+ delete_missing_values ************+ ")
     print(f"Shape of boston before deleting rows with missing values: {Color.GREEN}{df.shape}{Color.OFF}")
     zeros_count = (df == 0).sum()
     nans_count = df.isna().sum()
+    columns_to_drop = []
     for column in df.columns:
-        zero_count = zeros_count[column]
-        nan_count = nans_count[column]
-        if zero_count != 0 or nan_count != 0:
-            print(f"\t{Color.GREEN}Column {column}: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}{Color.OFF}")
+        zero_count = zeros_count[column] / len(df[column]) * 100
+        nan_count = nans_count[column] / len(df[column]) * 100
+        if zero_count > threshold_in_percentage or nan_count > threshold_in_percentage:
+            print(f"\t{Color.GREEN}Column {column} will be dropped because of either: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}{Color.OFF}")
+            columns_to_drop.append(column)
         else:
             print(f"\tColumn {column}: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}")
+    df.drop(columns=columns_to_drop, inplace=True)
+    print(f"Shape of boston after deleting rows with missing values: {Color.GREEN}{df.shape}{Color.OFF}")
     return df
 
