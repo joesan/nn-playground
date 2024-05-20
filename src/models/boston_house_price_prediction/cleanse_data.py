@@ -41,18 +41,13 @@ def delete_duplicate_rows(df):
 def delete_missing_values(df):
     red("************+ delete_missing_values ************+ ")
     print(f"Shape of boston before deleting rows with missing values: {Color.GREEN}{df.shape}{Color.OFF}")
-    has_zeros = (df == 0).any()
-    has_nans = df.isna().any()
-    if (has_zeros.any()):
-        print(f"Dataframe has zeros? {Color.GREEN}{has_zeros.any()}{Color.OFF}")
-        # Print the columns that contain zero values
-        for column, has_zero in has_zeros.items():
-            if has_zero:
-                print(f"\t Column {Color.GREEN}{column}{Color.OFF} contains zero values.")
-    if (has_nans.any()):
-        print(f"Dataframe has nan? {Color.GREEN}{has_nans.any()}{Color.OFF}")
-        # Print the columns that contain zero values
-        for column, has_nan in has_nans.items():
-            if has_nan:
-                print(f"\t Column {Color.GREEN}{column}{Color.OFF} contains nan values.")
+    zeros_count = (df == 0).sum()
+    nans_count = df.isna().sum()
+    for column in df.columns:
+        zero_count = zeros_count[column]
+        nan_count = nans_count[column]
+        if zero_count != 0 or nan_count != 0:
+            print(f"\t{Color.GREEN}Column {column}: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}{Color.OFF}")
+        else:
+            print(f"\tColumn {column}: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}")
     return df
