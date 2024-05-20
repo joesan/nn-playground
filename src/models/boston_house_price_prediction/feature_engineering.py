@@ -11,7 +11,7 @@ from sklearn.model_selection import RepeatedKFold
 class ImputeStrategy(Enum):
     MEAN = 'mean'
     MEDIAN = 'median'
-    MODE = 'mode'
+    MOST_FREQUENT = 'most_frequent'
     CONSTANT = 'constant'
 
 
@@ -28,13 +28,13 @@ def impute(df, impute_strategy=ImputeStrategy.MEAN):
     return df_imputed
 
 
-def evaluate_imputation_strategies(df):
+def evaluate_imputation_strategies(X, y):
     # Evaluate each strategy on the dataset
     results = list()
     for s in ImputeStrategy:
         # Create the modeling pipeline
         pipeline = Pipeline(steps=[
-            ('imputer', SimpleImputer(strategy=s)),
+            ('imputer', SimpleImputer(strategy=s.value)),
             ('model', LinearRegression())
         ])
         # Evaluate the model
@@ -45,3 +45,4 @@ def evaluate_imputation_strategies(df):
         # Store results
         results.append(scores)
         print('>%s %.3f (%.3f)' % (s, mean(scores), std(scores)))
+    return results
