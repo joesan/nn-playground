@@ -51,3 +51,4 @@ def delete_missing_values(df):
         else:
             print(f"\tColumn {column}: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}")
     return df
+
