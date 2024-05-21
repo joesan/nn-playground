@@ -15,6 +15,10 @@ class ImputeStrategy(Enum):
     CONSTANT = ('constant', 0)
 
 
+def split_features_target(df, target_col):
+    X, y = df.drop(columns=target_col), df[target_col]
+    return X, y
+
 def impute(df, impute_strategy=ImputeStrategy.MEAN):
     # Create a SimpleImputer instance with the specified strategy
     if impute_strategy == ImputeStrategy.CONSTANT:

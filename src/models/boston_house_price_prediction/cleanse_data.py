@@ -54,5 +54,6 @@ def delete_missing_values(df, threshold_in_percentage=70):
             print(f"\tColumn {column}: Zeros = {zeros_count[column]}, NaNs = {nans_count[column]}")
     df.drop(columns=columns_to_drop, inplace=True)
     print(f"Shape of boston after deleting rows with missing values: {Color.GREEN}{df.shape}{Color.OFF}")
+    red("************+ delete_missing_values ************+ ")
     return df
 
