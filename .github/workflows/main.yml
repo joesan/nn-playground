@@ -16,18 +16,19 @@ jobs:
       - uses: actions/setup-python@v4
         id: setup_python
         with:
-          python-version: '3.12'
+          python-version: '3.11'
 
-      - name: Cache virtualenv
-        uses: actions/cache@v3
+      - name: Cache venv directory
+        uses: actions/cache@v2
         with:
-          key: venv-${{ runner.os }}-${{ steps.setup_python.outputs.python-version}}-${{ hashFiles('requirements.txt') }}
-          path: .venv
+          path: .boston_house_price_prediction_venv
+          key: venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
 
       - name: Install dependencies
         run: |
-          python -m venv .venv
-          source .venv/bin/activate
+          python -m venv .boston_house_price_prediction_venv
+          source .boston_house_price_prediction_venv/bin/activate
+          echo "******************** Created Python Virtual Environment ********************"
           python -m pip install -r requirements.txt
           echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
           echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
