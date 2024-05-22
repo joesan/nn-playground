@@ -35,4 +35,4 @@ jobs:
       - name: Run tests
         run: |
           # Replace this line with the command to run your tests
-          pytest --cov=src src/tests/boston_housing_price_prediction/*test_*.py
+          pytest --cov=src src/tests/boston_housing_price_prediction/test_*.py
