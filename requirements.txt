@@ -20,4 +20,5 @@ python-dotenv
 colorist
 jupyter
 colorama
+pytest
 

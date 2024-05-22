@@ -70,3 +70,15 @@ def evaluate_imputation_strategies(X, y):
         best_strategy = max(mean_scores, key=mean_scores.get)
     print("Best imputation strategy:", best_strategy)
     return results, scores_dict, best_strategy
+
+
+def identify_categorical_features(df, max_unique_as_categorical=2):
+    # Select columns with object or category dtype
+    categorical_columns = list(df.select_dtypes(include=['object', 'category']).columns)
+    # Identify integer/float columns that should be treated as categorical
+    potential_categorical = df.select_dtypes(include=['int64', 'float64']).apply(
+        lambda col: col.nunique() <= max_unique_as_categorical
+    )
+    # Combine categorical columns and identified potential categorical columns
+    categorical_columns += list(potential_categorical[potential_categorical].index)
+    return categorical_columns
