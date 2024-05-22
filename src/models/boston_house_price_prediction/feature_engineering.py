@@ -15,8 +15,11 @@ class ImputeStrategy(Enum):
     CONSTANT = ('constant', 0)
 
 
-def split_features_target(df, target_col):
-    X, y = df.drop(columns=target_col), df[target_col]
+def split_features_target(df):
+    # Extracting features (first 12 columns) as a DataFrame
+    X = df.iloc[:, :-1]
+    # Extracting target variable (last column) as a Series
+    y = df.iloc[:, -1]
     return X, y
 
 def impute(df, impute_strategy=ImputeStrategy.MEAN):

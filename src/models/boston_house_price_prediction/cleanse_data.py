@@ -1,4 +1,6 @@
 from colorist import red, Color, BrightColor
+import pandas as pd
+from src.models.boston_house_price_prediction import feature_engineering
 
 
 # delete columns with a single unique value
@@ -25,18 +27,18 @@ def delete_duplicate_rows(df):
     red("************+ delete_duplicate_rows ************+ ")
     print(f"Shape of boston before deleting duplicated rows: {Color.GREEN}{df.shape}{Color.OFF}")
     # delete duplicate rows
-    dups = df.duplicated()
+    dupes = df.duplicated()
     # report if there are any duplicates
-    print(f"Are there any duplicate rows? {Color.GREEN}{dups.any()}{Color.OFF}")
-    if (dups.any()):
-        print(df[dups])
+    print(f"Are there any duplicate rows? {Color.GREEN}{dupes.any()}{Color.OFF}")
+    if (dupes.any()):
+        print(df[dupes])
         df.drop_duplicates(inplace=True)
         print(df.shape)
         red("************+ delete_duplicate_rows ************+ ")
-        return df
+        return feature_engineering.split_features_target(df)
     else:
         red("************+ delete_duplicate_rows ************+ ")
-        return df
+        return feature_engineering.split_features_target(df)
 
 def delete_missing_values(df, threshold_in_percentage=70):
     red("************+ delete_missing_values ************+ ")
