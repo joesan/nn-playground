@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
 
       - name: Cache venv directory
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: .boston_house_price_prediction_venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/_requirements_1.txt') }}
