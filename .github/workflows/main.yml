@@ -13,28 +13,36 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v4
-        id: setup_python
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
           python-version: '3.11'
 
       - name: Cache venv directory
-        uses: actions/cache@v4
+        id: cache-venv
+        uses: actions/cache@v2
         with:
-          path: ./.boston_house_price_prediction_venv
-          #fail-on-cache-miss: true
-          key: venv-${{ runner.os }}-${{ hashFiles('**/_requirements_1.txt') }}
+          path: .venv
+          key: venv-${{ runner.os }}-${{ hashFiles('requirements_1.txt') }}
+          restore-keys: |
+            venv-${{ runner.os }}-
+
+      - name: Create and activate virtual environment
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          echo $VIRTUAL_ENV
+          echo "******************** Created Python Virtual Environment ********************"
 
       - name: Install dependencies
         run: |
-          python -m venv .boston_house_price_prediction_venv
-          source .boston_house_price_prediction_venv/bin/activate
-          echo $VIRTUAL_ENV
-          echo "******************** Created Python Virtual Environment ********************"
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
           python -m pip install -r requirements_1.txt
           echo "******************** Successfully installed dependencies ********************"
 
       - name: Run tests
         run: |
-          # Replace this line with the command to run your tests
+          source .venv/bin/activate
           pytest --cov=src src/tests/boston_housing_price_prediction/test_*.py
