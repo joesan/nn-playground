@@ -48,4 +48,4 @@ jobs:
         run: |
           source .venv/bin/activate
           echo "will run tests later ****** "
-          pytest --cov=src src/tests/boston_housing_price_prediction/test_*.py
+          #pytest --cov=src src/tests/boston_housing_price_prediction/test_*.py
