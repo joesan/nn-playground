@@ -21,4 +21,5 @@ colorist
 jupyter
 colorama
 pytest
+pytest-cov
 
