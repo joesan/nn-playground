@@ -7,8 +7,8 @@ from src.models.is_it_a_bird import env
 
 
 def install_requirements():
-    # Run pip install command to install dependencies from requirements.txt
-    subprocess.check_call(['pip', 'install', '-r', os.path.join(env.project_root, 'requirements.txt')])
+    # Run pip install command to install dependencies from _requirements.txt
+    subprocess.check_call(['pip', 'install', '-r', os.path.join(env.project_root, '_requirements.txt')])
 
 def run():
     # Install requirements first

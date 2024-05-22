@@ -22,14 +22,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: .boston_house_price_prediction_venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/requirements.txt') }}
+          key: venv-${{ runner.os }}-${{ hashFiles('**/_requirements_1.txt') }}
 
       - name: Install dependencies
         run: |
           python -m venv .boston_house_price_prediction_venv
           source .boston_house_price_prediction_venv/bin/activate
+          echo $VIRTUAL_ENV
           echo "******************** Created Python Virtual Environment ********************"
           python -m pip install -r requirements.txt
+          echo "******************** Successfully installed dependencies ********************"
           echo "$VIRTUAL_ENV/bin" >> $GITHUB_PATH
           echo "VIRTUAL_ENV=$VIRTUAL_ENV" >> $GITHUB_ENV
 
