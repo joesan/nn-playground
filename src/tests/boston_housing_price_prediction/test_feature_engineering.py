@@ -15,17 +15,20 @@ def sample_dataframe():
     df['C'] = df['C'].astype('category')
     return df
 
+
 def test_identify_categorical_columns(sample_dataframe):
     df = sample_dataframe
     expected_categorical = ['A', 'C']
     result = identify_categorical_features(df)
     assert sorted(result) == sorted(expected_categorical), f"Expected {expected_categorical} but got {result}"
 
+
 def test_identify_categorical_columns_with_different_threshold(sample_dataframe):
     df = sample_dataframe
     expected_categorical = ['A', 'B', 'C']
-    result = identify_categorical_features(df, max_unique_as_categorical=1)
+    result = identify_categorical_features(df, min_unique_as_categorical=1, max_unique_as_categorical=2)
     assert sorted(result) == sorted(expected_categorical), f"Expected {expected_categorical} but got {result}"
+
 
 def test_no_categorical_columns():
     data = {
@@ -37,6 +40,7 @@ def test_no_categorical_columns():
     result = identify_categorical_features(df)
     assert result == expected_categorical, f"Expected {expected_categorical} but got {result}"
 
+
 def test_all_categorical_columns():
     data = {
         'A': ['a', 'b', 'c', 'd'],
@@ -47,6 +51,7 @@ def test_all_categorical_columns():
     expected_categorical = ['A', 'B']
     result = identify_categorical_features(df)
     assert sorted(result) == sorted(expected_categorical), f"Expected {expected_categorical} but got {result}"
+
 
 def test_mixed_data_types():
     data = {

@@ -24,6 +24,7 @@ def split_features_target(df):
     y = df.iloc[:, -1]
     return X, y
 
+
 def impute(df, impute_strategy=ImputeStrategy.MEAN):
     # Create a SimpleImputer instance with the specified strategy
     if impute_strategy == ImputeStrategy.CONSTANT:
@@ -73,10 +74,7 @@ def evaluate_imputation_strategies(X, y):
     return results, scores_dict, best_strategy
 
 
-
-
-
-def test_for_normality(df):
+def check_for_normality(df):
     """
     Performs Shapiro-Wilk normality test on each column of the DataFrame.
 
@@ -89,19 +87,18 @@ def test_for_normality(df):
     print("Shapiro-Wilk Normality Test Results:")
     for column in df.columns:
         stat, p = shapiro(df[column])
-        if (p < 0.05):
+        if p < 0.05:
             print(f"Column '{column}': {Color.GREEN}H0 is rejected because p-value is less than 0.05{Color.OFF} Statistics={stat:.3f}, p-value={p:.3f}")
         else:
             print(f"Column '{column}': Statistics={stat:.3f}")
 
 
-
-def identify_categorical_features(df, max_unique_as_categorical=2):
+def identify_categorical_features(df, min_unique_as_categorical=2, max_unique_as_categorical=2):
     # Select columns with object or category dtype
     categorical_columns = list(df.select_dtypes(include=['object', 'category']).columns)
     # Identify integer/float columns that should be treated as categorical
     potential_categorical = df.select_dtypes(include=['int64', 'float64']).apply(
-        lambda col: col.nunique() <= max_unique_as_categorical
+        lambda col: min_unique_as_categorical <= col.nunique() <= max_unique_as_categorical
     )
     # Combine categorical columns and identified potential categorical columns
     categorical_columns += list(potential_categorical[potential_categorical].index)
