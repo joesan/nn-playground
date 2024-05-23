@@ -6,6 +6,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import RepeatedKFold
+from colorist import red, Color
+from scipy.stats import shapiro
 
 
 class ImputeStrategy(Enum):
@@ -31,7 +33,6 @@ def impute(df, impute_strategy=ImputeStrategy.MEAN):
 
     # Fit the imputer to the data and transform it
     df_imputed = pd.DataFrame(imputer.fit_transform(df), columns=df.columns)
-
     return df_imputed
 
 
@@ -70,6 +71,29 @@ def evaluate_imputation_strategies(X, y):
         best_strategy = max(mean_scores, key=mean_scores.get)
     print("Best imputation strategy:", best_strategy)
     return results, scores_dict, best_strategy
+
+
+
+
+
+def test_for_normality(df):
+    """
+    Performs Shapiro-Wilk normality test on each column of the DataFrame.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        None
+    """
+    print("Shapiro-Wilk Normality Test Results:")
+    for column in df.columns:
+        stat, p = shapiro(df[column])
+        if (p < 0.05):
+            print(f"Column '{column}': {Color.GREEN}H0 is rejected because p-value is less than 0.05{Color.OFF} Statistics={stat:.3f}, p-value={p:.3f}")
+        else:
+            print(f"Column '{column}': Statistics={stat:.3f}")
+
 
 
 def identify_categorical_features(df, max_unique_as_categorical=2):

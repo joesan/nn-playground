@@ -19,7 +19,9 @@ duckduckgo_search
 python-dotenv
 colorist
 jupyter
+scipi
 colorama
+statsmodels
 pytest
 pytest-cov
 
