@@ -6,20 +6,18 @@ from src.models.boston_house_price_prediction import feature_engineering
 # delete columns with a single unique value
 def delete_unique_columns(df):
     red("************+ delete_unique_columns ************+ ")
-    print(f"Shape of boston before deleting columns with unique values: {Color.GREEN}{df.shape}{Color.OFF}")
+    print(f"Shape of DataFrame before deleting columns with unique values: {Color.GREEN}{df.shape}{Color.OFF}")
     # get number of unique values for each column
     counts = df.nunique()
     print(f"Are there any columns with unique values? {Color.GREEN}{(counts == 1).any()}{Color.OFF}")
     if (counts == 1).any():
-        # record columns to delete
-        to_del = [i for i,v in enumerate(counts) if v == 1]
+        # record columns to delete by their names
+        to_del = [col for col in counts.index if counts[col] == 1]
         # drop useless columns
         df.drop(to_del, axis=1, inplace=True)
-        print(f"Shape of boston after deleting unique columns: {Color.GREEN}{df.shape}{Color.OFF}")
-        red("************+ delete_unique_columns ************+ ")
-    else:
-        red("************+ delete_unique_columns ************+ ")
-        return df
+        print(f"Shape of DataFrame after deleting unique columns: {Color.GREEN}{df.shape}{Color.OFF}")
+    red("************+ delete_unique_columns ************+ ")
+    return df
 
 
 # delete rows containing duplicate data from the dataset
