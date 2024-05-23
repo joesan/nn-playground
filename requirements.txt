@@ -19,7 +19,7 @@ duckduckgo_search
 python-dotenv
 colorist
 jupyter
-scipi
+scipi>=1.13.1
 colorama
 statsmodels
 pytest
