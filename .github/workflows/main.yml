@@ -47,4 +47,4 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          pytest --cov=src src/tests/boston_housing_price_prediction/test_*.py
+          pytest --cov=src/models/boston_house_price_prediction src/tests/boston_housing_price_prediction/test_*.py
