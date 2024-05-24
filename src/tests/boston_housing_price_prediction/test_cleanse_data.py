@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-from src.models.boston_house_price_prediction.cleanse_data import delete_unique_columns
+from src.models.boston_house_price_prediction.cleanse_data import *
 
 
 @pytest.fixture
@@ -74,3 +74,43 @@ def test_delete_unique_columns_mixed(df_mixed):
     assert 'C' in result_df.columns, "Column 'C' should not be deleted"
     assert 'D' not in result_df.columns, "Column 'D' should be deleted"
 
+
+############################################# delete_duplicate_rows ####################################################
+
+
+# Sample DataFrame fixture with duplicate rows
+@pytest.fixture
+def df_with_duplicates():
+    data = {
+        'A': [1, 2, 3, 3, 4, 5],
+        'B': [1, 2, 3, 3, 4, 5],
+        'C': ['a', 'b', 'c', 'c', 'd', 'e']
+    }
+    return pd.DataFrame(data)
+
+
+# Sample DataFrame fixture without duplicate rows
+@pytest.fixture
+def df_no_duplicates():
+    data = {
+        'A': [1, 2, 3, 4, 5],
+        'B': [1, 2, 3, 4, 5],
+        'C': ['a', 'b', 'c', 'd', 'e']
+    }
+    return pd.DataFrame(data)
+
+
+# Test case to check if duplicate rows are correctly deleted
+def test_delete_duplicate_rows_with_duplicates(df_with_duplicates):
+    df = df_with_duplicates.copy()
+    result_df = delete_duplicate_rows(df)
+    assert result_df.shape[0] == 5, "Expected number of rows after deletion is 5"
+    assert not result_df.duplicated().any(), "There should be no duplicate rows after deletion"
+
+
+# Test case to check if the function returns the same DataFrame when there are no duplicate rows
+def test_delete_duplicate_rows_no_duplicates(df_no_duplicates):
+    df = df_no_duplicates.copy()
+    result_df = delete_duplicate_rows(df)
+    assert result_df.shape == df.shape, "Shape should remain the same when there are no duplicate rows"
+    assert result_df.equals(df), "DataFrames should be equal when there are no duplicate rows"

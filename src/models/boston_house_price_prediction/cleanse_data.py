@@ -10,7 +10,7 @@ def delete_unique_columns(df):
     # get number of unique values for each column
     counts = df.nunique()
     print(f"Are there any columns with unique values? {Color.GREEN}{(counts == 1).any()}{Color.OFF}")
-    if (counts == 1).any():
+    if counts.any() == 1:
         # record columns to delete by their names
         to_del = [col for col in counts.index if counts[col] == 1]
         # drop useless columns
@@ -28,7 +28,7 @@ def delete_duplicate_rows(df):
     dupes = df.duplicated()
     # report if there are any duplicates
     print(f"Are there any duplicate rows? {Color.GREEN}{dupes.any()}{Color.OFF}")
-    if (dupes.any()):
+    if dupes.any():
         print(df[dupes])
         df.drop_duplicates(inplace=True)
         print(df.shape)
@@ -37,6 +37,7 @@ def delete_duplicate_rows(df):
     else:
         red("************+ delete_duplicate_rows ************+ ")
         return feature_engineering.split_features_target(df)
+
 
 def delete_missing_values(df, threshold_in_percentage=70):
     red("************+ delete_missing_values ************+ ")

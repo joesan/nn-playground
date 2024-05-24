@@ -12,7 +12,7 @@ matplotlib
 nbdev>=0.2.12
 pandas
 numpy
-scikit_learn
+scikit-learn
 azure-cognitiveservices-search-imagesearch
 sentencepiece
 duckduckgo_search
