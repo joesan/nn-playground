@@ -282,3 +282,40 @@ def test_zero_variance_features():
     results, _, best_strategy = evaluate_imputation_strategies(features, y)
     assert len(results) == len(ImputeStrategy)
     assert best_strategy in results
+
+############################################## check_for_normality #####################################################
+
+
+# Test case: Test function with a DataFrame containing normally distributed data
+def test_normal_distribution():
+    data = {'A': np.random.normal(0, 1, 100),
+            'B': np.random.normal(0, 1, 100)}
+    df = pd.DataFrame(data)
+    check_for_normality(df)  # No assertion needed, just checking for any errors.
+
+
+# Test case: Test function with a DataFrame containing non-normally distributed data
+def test_non_normal_distribution():
+    data = {'A': np.random.uniform(0, 1, 100),
+            'B': np.random.uniform(0, 1, 100)}
+    df = pd.DataFrame(data)
+    with pytest.raises(ValueError):
+        check_for_normality(df)  # Expecting a ValueError because data is not normally distributed
+
+
+# Test case: Test function with an empty DataFrame
+def test_empty_dataframe():
+    df = pd.DataFrame()
+    with pytest.raises(ValueError):
+        check_for_normality(df)  # Expecting a ValueError because the DataFrame is empty
+
+
+# Test case: Test function with a DataFrame containing NaN values
+def test_dataframe_with_nan():
+    data = {'A': np.random.normal(0, 1, 100),
+            'B': np.random.normal(0, 1, 100)}
+    df = pd.DataFrame(data)
+    df.loc[0, 'A'] = np.nan  # introducing NaN value
+    with pytest.raises(ValueError):
+        check_for_normality(df)  # Expecting a ValueError because the DataFrame contains NaN values
+        
