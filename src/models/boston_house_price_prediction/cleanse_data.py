@@ -22,6 +22,15 @@ def delete_unique_columns(df):
 
 # delete rows containing duplicate data from the dataset
 def delete_duplicate_rows(df):
+    """
+    Deletes duplicate rows by keeping the first instance intact.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+
+    Returns:
+        DataFrame with deleted duplicate rows.
+    """
     red("************+ delete_duplicate_rows ************+ ")
     print(f"Shape of boston before deleting duplicated rows: {Color.GREEN}{df.shape}{Color.OFF}")
     # delete duplicate rows
