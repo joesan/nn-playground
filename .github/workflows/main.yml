@@ -1,9 +1,11 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: '1 */24 * * *' # Runs every 24 Hours
+  #push:
+   # branches:
+    #  - master
 
 jobs:
   build-and-test:
