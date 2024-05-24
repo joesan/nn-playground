@@ -48,10 +48,23 @@ def delete_duplicate_rows(df):
 
 
 def delete_missing_values(df, threshold_in_percentage=70):
+    """
+    Deletes duplicate rows by keeping the first instance intact.
+
+    Args:
+        df (pd.DataFrame): Input DataFrame.
+        threshold_in_percentage: Default '70' percent
+            The percentage above which rows are deleted. For example., if the total zero's or nan's
+            for any column calculated as a percentage of the total length of that column exceeds 70%, then that
+            column will be selected for it to be dropped.
+
+    Returns:
+        DataFrame with deleted duplicate rows.
+    """
     red("************+ delete_missing_values ************+ ")
     print(f"Shape of boston before deleting rows with missing values: {Color.GREEN}{df.shape}{Color.OFF}")
-    zeros_count = (df == 0).sum()
-    nans_count = df.isna().sum()
+    zeros_count = df.isin([0]).sum(axis=0)
+    nans_count = df.isna().sum(axis=0)
     columns_to_drop = []
     for column in df.columns:
         zero_count = zeros_count[column] / len(df[column]) * 100

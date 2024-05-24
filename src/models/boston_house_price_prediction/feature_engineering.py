@@ -26,9 +26,12 @@ def split_features_target(df):
 
 
 def impute(df, impute_strategy=ImputeStrategy.MEAN):
+    # SimpleImputer does not work with empty DataFrame, so let us return the empty DataFrame back
+    if len(df.index) == 0:
+        return df
     # Create a SimpleImputer instance with the specified strategy
     if impute_strategy == ImputeStrategy.CONSTANT:
-        imputer = SimpleImputer(strategy=impute_strategy.value, fill_value=0)  # Example constant value
+        imputer = SimpleImputer(strategy=impute_strategy.value[0], fill_value=impute_strategy.value[1])
     else:
         imputer = SimpleImputer(strategy=impute_strategy.value)
 
@@ -37,7 +40,10 @@ def impute(df, impute_strategy=ImputeStrategy.MEAN):
     return df_imputed
 
 
-def evaluate_imputation_strategies(X, y):
+def evaluate_imputation_strategies(features, y, num_splits=10, num_repeats=3, rnd_state=1):
+    # Check if features or target values are empty
+    if len(features.index) <= 1 or len(y.index) <= 1 or (features.isna().all().all()) or (y.isna().all()):
+        raise ValueError("Input features or target values are empty.")
     # Evaluate each strategy on the dataset
     results = {}
     scores_dict = {}
@@ -53,8 +59,8 @@ def evaluate_imputation_strategies(X, y):
             ('model', LinearRegression())
         ])
         # Evaluate the model
-        cv = RepeatedKFold(n_splits=10, n_repeats=3, random_state=1)
-        scores = cross_val_score(pipeline, X, y, scoring='neg_root_mean_squared_error', cv=cv, n_jobs=-1)
+        cv = RepeatedKFold(n_splits=num_splits, n_repeats=num_repeats, random_state=rnd_state)
+        scores = cross_val_score(pipeline, features, y, scoring='neg_root_mean_squared_error', cv=cv, n_jobs=-1)
         # Convert scores to positive
         scores = -scores
         # Store results
