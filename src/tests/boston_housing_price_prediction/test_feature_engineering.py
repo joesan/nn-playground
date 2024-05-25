@@ -318,4 +318,3 @@ def test_dataframe_with_nan():
     df.loc[0, 'A'] = np.nan  # introducing NaN value
     with pytest.raises(ValueError):
         check_for_normality(df)  # Expecting a ValueError because the DataFrame contains NaN values
-        
