@@ -23,14 +23,14 @@ from dotenv import load_dotenv
 
 ##bsolute_path = os.path.abspath(project_root)
 #data_dir = Path(absolute_path) / 'data' / 'raw' / 'boston_housing_price'
-data_dir = data_dir.resolve()  # Resolve to get the absolute path
-models_dir = Path(absolute_path) / 'models' / 'boston_housing_price'
-print('***************** LOAD ENVIRONMENT ********************+')
-print("Project Root DIR", absolute_path)
-print("Project Data DIR", data_dir)
-print("Models Dump DIR", models_dir)
-print('***************** LOAD ENVIRONMENT ********************+')
-model_path = models_dir / model_filename
+#data_dir = data_dir.resolve()  # Resolve to get the absolute path
+#models_dir = Path(absolute_path) / 'models' / 'boston_housing_price'
+#print('***************** LOAD ENVIRONMENT ********************+')
+#print("Project Root DIR", absolute_path)
+#print("Project Data DIR", data_dir)
+#print("Models Dump DIR", models_dir)
+#print('***************** LOAD ENVIRONMENT ********************+')
+#model_path = models_dir / model_filename
 
 
 class BostonHousingConfig:
