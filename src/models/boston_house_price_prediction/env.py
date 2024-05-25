@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 # Define the filename for the resulting model
 model_filename = 'boston_housing_price_predictor.pkl'
-#boston_dataset_url = "http://lib.stat.cmu.edu/datasets/boston"
+boston_dataset_url = "http://lib.stat.cmu.edu/datasets/boston"
 boston_dataset_url = 'https://raw.githubusercontent.com/noahgift/boston_housing_pickle/master/housing.csv'
 boston_dataset = 'boston_housing.csv'
 
