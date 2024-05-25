@@ -13,11 +13,11 @@ from dotenv import load_dotenv
 
 
 # Load environment variables from the .env file
-env_file = find_dotenv(".env")
-environ = load_dotenv(env_file)
+#env_file = find_dotenv(".env")
+#environ = load_dotenv(env_file)
 
 # Access the environment variables
-project_root = os.environ.get('PROJECT_ROOT_FOLDER')
+#project_root = os.environ.get('PROJECT_ROOT_FOLDER')
 if not project_root:
     raise ValueError("PROJECT_ROOT_FOLDER environment variable is not set.")
 
