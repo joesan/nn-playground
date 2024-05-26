@@ -1,7 +1,7 @@
 import os
 import pytest
 from pathlib import Path
-from dotenv import set_key, unset_key
+from dotenv import unset_key
 from src.models.boston_house_price_prediction.env import BostonHousingConfig
 
 
@@ -39,7 +39,7 @@ def test_missing_env_file():
 def test_missing_project_root_env_var(tmpdir):
     env_file_path = tmpdir.join(".env")
     with open(env_file_path, 'w') as f:
-        f.write("")
+        f.write(f"PROJECT_ROOT_FOLDER={''}")
 
     config = BostonHousingConfig(env_file_path=str(env_file_path))
 
