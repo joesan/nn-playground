@@ -4,13 +4,14 @@ source = .
 
 # Exclude specific files from coverage measurement.
 omit =
-    src/models/boston_housing/test_omit.py
+    src/models/boston_house_price_prediction/run.py
+    src/models/boston_house_price_prediction/train_model.py
 
 [report]
 # Files to omit from the report.
 omit =
-    src/models/boston_housing_price_prediction/run.py
-    src/models/boston_housing_price_prediction/train_model.py
+    src/models/boston_house_price_prediction/run.py
+    src/models/boston_house_price_prediction/train_model.py
 
 # Do not include files that are not measured in the report.
 show_missing = True
