@@ -72,5 +72,5 @@ class BostonHousingConfig:
 
 
 # Example usage:
-config = BostonHousingConfig()
-config.load_environment()
+#config = BostonHousingConfig()
+#config.load_environment()

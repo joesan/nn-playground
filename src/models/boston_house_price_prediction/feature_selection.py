@@ -11,6 +11,7 @@ def select_features(X_train, y_train, X_test):
     X_test_fs = fs.transform(X_test)
     return X_train_fs, X_test_fs, fs
 
+
 def delete_features_with_low_correlation(df, target_column, threshold = 0.1):
     red("************+ delete_features_with_low_correlation ************+ ")
     print(f"Shape of boston before deleting features with low co-relation {Color.GREEN}{df.shape}{Color.OFF}")
