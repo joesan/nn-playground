@@ -47,12 +47,13 @@ def test_missing_project_root_env_var(tmpdir):
         config.load_environment()
 
 
-def test_invalid_project_root_path(tmpdir):
+def test_invalid_project_root_path(tmpdir, monkeypatch):
     invalid_path = "/invalid/path/to/project_root"
     env_file_path = tmpdir.join(".env")
     with open(env_file_path, 'w') as f:
         f.write(f"PROJECT_ROOT_FOLDER={invalid_path}")
 
+    monkeypatch.setenv("PROJECT_ROOT_FOLDER", invalid_path)
     config = BostonHousingConfig(env_file_path=str(env_file_path))
     config.load_environment()
 
