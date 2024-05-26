@@ -36,11 +36,12 @@ def test_missing_env_file():
         config.load_environment()
 
 
-def test_missing_project_root_env_var(tmpdir):
+def test_missing_project_root_env_var(tmpdir, monkeypatch):
     env_file_path = tmpdir.join(".env")
     with open(env_file_path, 'w') as f:
         f.write(f"PROJECT_ROOT_FOLDER={''}")
 
+    monkeypatch.setenv("PROJECT_ROOT_FOLDER", "")
     config = BostonHousingConfig(env_file_path=str(env_file_path))
 
     with pytest.raises(ValueError, match="PROJECT_ROOT_FOLDER environment variable is not set."):
