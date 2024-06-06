@@ -1,7 +1,7 @@
 nn-playground
 ==============================
 
-Playground for doing some neural networks
+A Playground for doing some neural networks
 
 Project Organization
 ------------
