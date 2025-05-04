@@ -1,4 +1,4 @@
-# DEPRECATED: USE THIS PROJECT INSTEAD - ml-playground
+# DEPRECATED: USE THIS PROJECT INSTEAD - https://github.com/joesan/ml-playground
 
 nn-playground
 ==============================
