@@ -1,3 +1,5 @@
+# DEPRECATED: USE THIS PROJECT INSTEAD - ml-playground
+
 nn-playground
 ==============================
 
