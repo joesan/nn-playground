@@ -1,7 +1,7 @@
 from tensorflow import keras
-from tensorflow.keras import layers
 from src.shared import env
-
+import os
+import tensorflow as tf
 
 prefix = "    "
 
@@ -64,7 +64,7 @@ def build_model(input_dim: int, model_name: str) -> keras.Model:
     return model
 
 
-def train_model(model, X_train, y_train, X_test, y_test, model_name: str):
+def train_model(model, X_train, y_train, model_name: str):
     """
     Train a pre-built Keras model using parameters from env.py and save it globally.
 
@@ -90,17 +90,18 @@ def train_model(model, X_train, y_train, X_test, y_test, model_name: str):
     # 2. Train the model
     # --------------------------
     history = model.fit(
-        X_train,
-        y_train,
-        validation_data=(X_test, y_test),
-        epochs=params.get("epochs", 50),
-        batch_size=params.get("batch_size", 16),
-        verbose=1
+        X_train,  # Features for training
+        y_train,  # Target labels
+        epochs = params.get("epochs", 50),  # Number of passes over the full dataset
+        batch_size = params.get("batch_size", 16),  # Number of samples per gradient update
+        verbose = 1,  # Print progress per epoch
+        validation_split = params.get("validation_split", 0.2)  # Automatically hold out 20% of train_X/train_y for validation
     )
 
     # --------------------------
     # 3. Save the model globally
     # --------------------------
+    print(tf.config.list_physical_devices())
     os.makedirs(env.GLOBAL_MODELS_DIR, exist_ok=True)
     model_path = os.path.join(env.GLOBAL_MODELS_DIR, f"{model_name}.keras")
     model.save(model_path)

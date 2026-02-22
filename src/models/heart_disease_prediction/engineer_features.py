@@ -1,13 +1,10 @@
 import pandas as pd
 from colorist import red
 from sklearn.preprocessing import StandardScaler
+import src.shared.env as env
 
 
 prefix = "    "
-
-# Explicit numeric columns to scale
-NUMERIC_COLUMNS = ['age', 'trestbps','chol', 'thalach', 'oldpeak', 'slope']
-
 
 def split_target(df: pd.DataFrame, target_column: str = "target"):
     red(f"{prefix} ************+ START: Extract Target Column ************+")
@@ -29,7 +26,7 @@ def encode_categoricals(X: pd.DataFrame):
     categorical_cols = X.select_dtypes(include=["object", "category"]).columns
     if len(categorical_cols) > 0:
         print(f"{prefix} Encoding categorical columns: {list(categorical_cols)}")
-        X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
+        X = pd.get_dummies(X, columns=categorical_cols, drop_first=False)
     red(f"{prefix} ************+ END: Encode Categorical Columns ************+")
 
     return X
@@ -38,7 +35,7 @@ def encode_categoricals(X: pd.DataFrame):
 def scale_numeric_features(X: pd.DataFrame, y: pd.DataFrame, scaler: StandardScaler = None):
     red(f"{prefix} ************+ START: Scale Columns ************+")
 
-    cols_to_scale = [col for col in NUMERIC_COLUMNS if col in X.columns]
+    cols_to_scale = [col for col in env.NUMERIC_COLUMNS if col in X.columns]
     if len(cols_to_scale) > 0:
         if scaler is None:
             print(f"{prefix} Default Scaler is not set, so defaulting to StandardScaler()")

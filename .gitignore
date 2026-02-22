@@ -90,3 +90,6 @@ myenv/
 
 # Mypy cache
 .mypy_cache/
+
+# Model files
+models/*
