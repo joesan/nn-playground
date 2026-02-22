@@ -16,8 +16,6 @@ def cleanse_raw_data(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Cleaned DataFrame
     """
-    red("************+ START: cleanse_raw_data START ************+ ")
-
     # 1. Delete duplicate rows
     print("[INFO] Removing duplicate rows...")
     df = delete_duplicate_rows(df)
@@ -26,5 +24,4 @@ def cleanse_raw_data(df: pd.DataFrame) -> pd.DataFrame:
     print("[INFO] Removing columns with a single unique value...")
     df = delete_unique_columns(df)
 
-    red("************+ END: cleanse_raw_data END ************+ ")
     return df

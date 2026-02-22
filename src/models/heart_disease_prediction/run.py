@@ -1,6 +1,9 @@
 from src.models.heart_disease_prediction.cleanse_raw_data import cleanse_raw_data
+from src.models.heart_disease_prediction.engineer_features import engineer_features
 from src.shared.load_data import download_csv
 from src.shared.install_requirements import install_requirements_txt
+
+from colorist import green
 
 
 def run(model_name="heart_disease_prediction"):
@@ -34,14 +37,18 @@ def run(model_name="heart_disease_prediction"):
     # ---------------------------
     # 3. Cleanse the raw data
     # ---------------------------
+    green(f"************+ START: cleanse_raw_data ************+")
     df_clean = cleanse_raw_data(df)
-    print(f"[INFO] RAW CSV Data cleansed; shape is now {df_clean.shape}.")
+    green(f"[INFO] RAW CSV Data cleansed; shape is now {df_clean.shape}.")
+    green(f"************+ END: cleanse_raw_data ************+")
 
     # ---------------------------
     # 4. Feature Engineering
     # ---------------------------
-    #X, y = engineer_features(df_clean)
-    #print(f"[INFO] Features engineered; X shape: {X.shape}, y shape: {y.shape}.")
+    green(f"************+ START: engineer_features ************+")
+    X, y = engineer_features(df_clean)
+    green(f"[INFO] Features engineered; X shape: {X.shape}, y shape: {y.shape}.")
+    green(f"************+ END: engineer_features ************+")
 
     # ---------------------------
     # 5. Train the model

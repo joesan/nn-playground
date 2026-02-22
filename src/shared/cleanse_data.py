@@ -96,7 +96,7 @@ def cleanse_raw_data(df: pd.DataFrame) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Cleaned DataFrame
     """
-    red("************+ START: cleanse_raw_data START ************+ ")
+    red("************+ START: cleanse_raw_data ************+ ")
 
     # 1. Delete duplicate rows
     print("[INFO] Removing duplicate rows...")
@@ -110,5 +110,5 @@ def cleanse_raw_data(df: pd.DataFrame) -> pd.DataFrame:
     print(f"[INFO] Removing columns with > {env.MISSING_VALUE_THRESHOLD}% missing or zero values...")
     df = delete_missing_values(df, threshold_in_percentage = env.MISSING_VALUE_THRESHOLD)
 
-    red("************+ END: cleanse_raw_data END ************+ ")
+    red("************+ END: cleanse_raw_data ************+ ")
     return df
