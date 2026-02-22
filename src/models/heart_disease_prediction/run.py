@@ -2,6 +2,7 @@ from src.models.heart_disease_prediction.cleanse_raw_data import cleanse_raw_dat
 from src.models.heart_disease_prediction.engineer_features import *
 from src.shared.load_data import download_csv
 from src.shared.install_requirements import install_requirements_txt
+from src.models.heart_disease_prediction.build_model import *
 from sklearn.model_selection import train_test_split
 
 from colorist import green
@@ -68,16 +69,21 @@ def run(model_name="heart_disease_prediction"):
 
     # Apply the scaler to the test dataset
     X_test_scaled, y_test, _ = scale_numeric_features(X_test, y_test)
-    
+
     green(f"[INFO] Features engineered; X_train shape: {X_train_scaled.shape}, y shape: {y_train.shape}.")
     green(f"[INFO] Features engineered; X_test shape:  {X_test_scaled.shape},  y shape: {y_test.shape}.")
     green(f"************+ END: engineer_features ************+")
 
     # ---------------------------
-    # 7. Train the model
+    # 7. Build the model
     # ---------------------------
-    #model = train_model(X, y)
-    #print(f"[INFO] Model trained: {model}.")
+    green(f"************+ START: build_model ************+")
+    model = build_model(input_dim=X_train_scaled.shape[1], model_name="heart_disease_prediction")
+    green(f"************+ END: build_model ************+")
+
+    # ---------------------------
+    # 8. Train the model
+    # ---------------------------
 
     # ---------------------------
     # 8. Start the Flask app for inference

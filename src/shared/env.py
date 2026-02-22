@@ -24,6 +24,14 @@ MODEL_PARAMS = {
     "heart_disease_prediction": {
         "n_estimators": 100,
         "max_depth": 5,
-        "random_state": 42
+        "random_state": 42,
+        "hidden_layers": [16],
+        "activation": "relu",
+        "output_activation": "sigmoid",
+        "optimizer": "adam",
+        "loss": "binary_crossentropy",
+        "metrics": ["accuracy"],
+        "epochs": 50,
+        "batch_size": 16
     }
 }

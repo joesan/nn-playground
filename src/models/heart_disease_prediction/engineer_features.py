@@ -13,7 +13,7 @@ def split_target(df: pd.DataFrame, target_column: str = "target"):
     red(f"{prefix} ************+ START: Extract Target Column ************+")
 
     if target_column not in df.columns:
-        raise ValueError(f"Target column '{target_column}' not found in DataFrame")
+        raise ValueError(f"{prefix} Target column '{target_column}' not found in DataFrame")
 
     y = df[target_column]
     X = df.drop(columns=[target_column])
