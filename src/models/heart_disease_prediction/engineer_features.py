@@ -1,26 +1,17 @@
 import pandas as pd
 from colorist import red
+from sklearn.preprocessing import StandardScaler
 
 
 prefix = "    "
 
-def engineer_features(df: pd.DataFrame, target_column: str = "target") -> tuple[pd.DataFrame, pd.Series]:
-    """
-    Perform feature engineering on the cleaned DataFrame.
+# Explicit numeric columns to scale
+NUMERIC_COLUMNS = ['age', 'trestbps','chol', 'thalach', 'oldpeak', 'slope']
 
-    Args:
-        df (pd.DataFrame): Cleaned DataFrame.
-        target_column (str): Name of the target variable column.
 
-    Returns:
-        X (pd.DataFrame): Feature matrix.
-        y (pd.Series): Target vector.
-    """
-
-    # --------------------------
-    # 1. Separate target
-    # --------------------------
+def split_target(df: pd.DataFrame, target_column: str = "target"):
     red(f"{prefix} ************+ START: Extract Target Column ************+")
+
     if target_column not in df.columns:
         raise ValueError(f"Target column '{target_column}' not found in DataFrame")
 
@@ -29,21 +20,44 @@ def engineer_features(df: pd.DataFrame, target_column: str = "target") -> tuple[
     print(f"{prefix} Target Colum Extracted is = {y.name}")
     red(f"{prefix} ************+ END: Extract Target Column ************+")
 
-    # --------------------------
-    # 2. Encode categorical variables
-    # --------------------------
+    return X, y
+
+
+def encode_categoricals(X: pd.DataFrame):
     red(f"{prefix} ************+ START: Encode Categorical Columns ************+")
+
     categorical_cols = X.select_dtypes(include=["object", "category"]).columns
     if len(categorical_cols) > 0:
         print(f"{prefix} Encoding categorical columns: {list(categorical_cols)}")
         X = pd.get_dummies(X, columns=categorical_cols, drop_first=True)
     red(f"{prefix} ************+ END: Encode Categorical Columns ************+")
 
-    # --------------------------
-    # 3. Optional: scale numeric features
-    # --------------------------
-    # from sklearn.preprocessing import StandardScaler
-    # numeric_cols = X.select_dtypes(include=["int64", "float64"]).columns
-    # scaler = StandardScaler()
-    # X[numeric_cols] = scaler.fit_transform(X[numeric_cols])
-    return X, y
+    return X
+
+
+def scale_numeric_features(X: pd.DataFrame, y: pd.DataFrame, scaler: StandardScaler = None):
+    red(f"{prefix} ************+ START: Scale Columns ************+")
+
+    cols_to_scale = [col for col in NUMERIC_COLUMNS if col in X.columns]
+    if len(cols_to_scale) > 0:
+        if scaler is None:
+            print(f"{prefix} Default Scaler is not set, so defaulting to StandardScaler()")
+            scaler = StandardScaler()
+            X[cols_to_scale] = scaler.fit_transform(X[cols_to_scale])
+            red(f"{prefix} ************+ END: Scale Columns ************+")
+        else:
+            print(f"{prefix} Scaling numeric columns using {scaler}")
+            X[cols_to_scale] = scaler.transform(X[cols_to_scale])
+            red(f"{prefix} ************+ END: Scale Columns ************+")
+
+    check_rows_and_index_sanity(X, y)
+    return X, y, scaler
+
+
+def check_rows_and_index_sanity(X: pd.DataFrame, y: pd.DataFrame):
+    if len(X) != len(y):
+        raise ValueError("Row count mismatch between X and y.")
+
+    if not X.index.equals(y.index):
+        raise ValueError("Index mismatch between X and y.")
+
