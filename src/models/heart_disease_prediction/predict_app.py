@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
-import os, subprocess, sys
+import os
 import joblib
 from tensorflow import keras
 import pandas as pd
-import src.shared.env as env
+from src.shared import env
 
 
 # ---------------------------

@@ -1,0 +1,26 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Copy requirements first (better caching)
+COPY src/models/heart_disease_prediction/requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy only required code
+COPY src/models/heart_disease_prediction ./models/heart_disease_prediction
+COPY src/shared ./shared
+
+# Copy the models
+COPY models/heart_disease_prediction.keras ./models/heart_disease_prediction.keras
+COPY models/heart_disease_prediction_scaler.pkl ./models/heart_disease_prediction_scaler.pkl
+COPY models/heart_disease_prediction_columns.pkl ./models/heart_disease_prediction_columns.pkl
+
+# Allow shared imports
+ENV PYTHONPATH=/app
+
+WORKDIR /app/models/heart_disease_prediction
+
+EXPOSE 5000
+
+CMD ["python", "predict_app.py"]
