@@ -1,5 +1,3 @@
-# DEPRECATED: USE THIS PROJECT INSTEAD - https://github.com/joesan/ml-playground
-
 nn-playground
 ==============================
 
@@ -55,8 +53,6 @@ Project Organization
 
 
 --------
-
-TODO: Under documentation!!!!
 
 # To Install Dependencies
 
