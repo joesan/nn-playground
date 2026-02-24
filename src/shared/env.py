@@ -2,8 +2,13 @@ import os
 from keras.metrics import AUC
 
 
-# Determine project root dynamically
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+# PROJECT_ROOT
+# - Local dev: nn-playground folder
+# - Docker: /app
+PROJECT_ROOT = os.environ.get(
+    "PROJECT_ROOT",
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+)
 
 # Paths
 DATA_RAW_DIR = os.path.join(PROJECT_ROOT, "data", "raw")

@@ -17,7 +17,9 @@ COPY models/heart_disease_prediction_scaler.pkl ./models/heart_disease_predictio
 COPY models/heart_disease_prediction_columns.pkl ./models/heart_disease_prediction_columns.pkl
 
 # Allow shared imports
+# Environment variables for Docker
 ENV PYTHONPATH=/app
+ENV PROJECT_ROOT=/app
 
 WORKDIR /app/models/heart_disease_prediction
 

@@ -3,7 +3,7 @@ import os
 import joblib
 from tensorflow import keras
 import pandas as pd
-from src.shared import env
+from shared import env
 
 
 # ---------------------------
