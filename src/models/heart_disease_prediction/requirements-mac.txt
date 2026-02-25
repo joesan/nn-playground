@@ -4,6 +4,7 @@ numpy
 joblib
 scikit-learn
 
+# neural-net
 tensorflow-metal
 tensorflow-macos
 
