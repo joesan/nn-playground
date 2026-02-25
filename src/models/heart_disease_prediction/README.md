@@ -28,6 +28,15 @@ source venvs/.venv_heart_disease_prediction/bin/activate
 pip install -r src/models/heart_disease_prediction/requirements.txt
 ```
 
+## Run Tests
+
+To run the pytest unit tests locally, 
+
+```bash
+python -m pytest src/tests/heart_disease_prediction/test_cleanse_raw_data.py
+```
+
+
 ## Run Inference
 
 ### Locally (Python)
