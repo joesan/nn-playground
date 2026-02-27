@@ -4,8 +4,8 @@ on:
   schedule:
     - cron: '1 */24 * * *' # Runs every 24 Hours
   #push:
-   # branches:
-    #  - master
+  #  branches:
+  #    - master
 
 jobs:
   build-and-test:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Cache venv directory
         id: cache-venv
@@ -41,7 +41,7 @@ jobs:
         run: |
           source .venv/bin/activate
           python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
+          python -m pip install -r src/models/heart_disease_prediction/requirements.txt
           echo "******************** Successfully installed dependencies ********************"
           echo $VIRTUAL_ENV/bin >> $GITHUB_PATH
           echo VIRTUAL_ENV=$VIRTUAL_ENV >> $GITHUB_ENV
@@ -49,4 +49,4 @@ jobs:
       - name: Run tests
         run: |
           source .venv/bin/activate
-          pytest --cov=src/models/boston_house_price_prediction src/tests/boston_housing_price_prediction/test_*.py
+          pytest --cov=src/models/heart_disease_prediction src/tests/heart_disease_prediction/test_*.py
